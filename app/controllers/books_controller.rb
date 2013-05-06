@@ -9,6 +9,13 @@ class BooksController < ApplicationController
   def index
     # 本のレコード全部を表示する
     @books = Book.all
+
+    # 以下追記箇所
+    @search_form = SearchForm.new params[:search_form]
+    if @search_form.q.present?
+      # Book.allしたあとでも条件を追加できる
+      @books = @books.titled @search_form.q
+    end
   end
 
   # GET /books/1
